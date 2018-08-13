@@ -35,9 +35,7 @@ pus: push 10
 dec r15
 cmp r15,0
 jne pus
-push rbp
 call _dprintf
-pop rbp
 mov r15, 52
 po: pop rax
 dec r15
