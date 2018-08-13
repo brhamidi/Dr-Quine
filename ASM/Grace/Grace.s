@@ -30,11 +30,11 @@ push 34
 lea r15,[rel format]
 push r15
 push 34
-;mov r15,?
-;pus: push 10
-;dec r15
-;cmp r15,0
-;jne pus
+mov r15,12
+pus: push 10
+dec r15
+cmp r15,0
+jne pus
 xor rax,rax
 call _dprintf
 ;mov r15, ?
@@ -51,6 +51,7 @@ syscall
 ret
 section .data
 filename: db %1,0
-format: db "%%define SYSCALL(N) 0x02000000 | N%c%%define OPEN 5%c%%define F 0x0002 | 0x0200 | 0x0400%c%%macro ft 1%cformat: db %c%s%c,0%c%%endmacro%cft %cGrace_kid.s%c%c",0
+
+format: db "%%define SYSCALL(N) 0x02000000 | N%c%%define OPEN 5%c%%define F 0x0002 | 0x0200 | 0x0400%c%%macro ft 1%c;%c; Erlang%c;%cglobal _main%cextern _dprintf%csection .text%c_main:%cmov rax,SYSCALL(OPEN)%clea rdi,[rel filename]%cmov rsi,F%cmov rdx,654q%csyscall%cformat: db %c%s%c,0%c%%endmacro%cft %cGrace_kid.s%c%c",0
 %endmacro
 ft 'Grace_kid.s'
