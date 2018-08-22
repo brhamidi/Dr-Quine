@@ -2,12 +2,8 @@
 #include <stdio.h>
 #include <fcntl.h>
 #include <stdlib.h>
-#include <string.h>
-int i = 5;
-char n[]="Sully_X.c";
-char prog[]="./Sully_X";
-char *const test[]={"ls", "-l", NULL};
-char compile[50] = "gcc -Werror -Wextra -Wall -o ";
-void e(){strcat(compile, prog + 2);strcat(compile, " ");strcat(compile, n);system(compile);system(prog);};
-void f(){n[6]=48+i;prog[8]=48+i;char *s="#include <unistd.h>%c#include <stdio.h>%c#include <fcntl.h>%c#include <stdlib.h>%c#include <string.h>%cint i = %c;%cchar n[]=%cSully_X.c%c;%cchar prog[]=%c./Sully_X%c;%cchar *const test[]={%cls%c, %c-l%c, NULL};%cchar compile[50] = %cgcc -Werror -Wextra -Wall -o %c;%cvoid e(){strcat(compile, prog + 2);strcat(compile, %c %c);strcat(compile, n);system(compile);system(prog);};%cvoid f(){n[6]=48+i;prog[8]=48+i;char *s=%c%s%c;int fd=open(n,O_CREAT|O_RDWR,S_IRUSR|S_IRGRP|S_IROTH);dprintf(fd,s,10,10,10,10,10,48+i-1,10,34,34,10,34,34,10,34,34,34,34,10,34,34,10,34,34,10,34,s,34,10,10);e();close(fd);}%cint main(){if(i)f();}%c";int fd=open(n,O_CREAT|O_RDWR,S_IRUSR|S_IRGRP|S_IROTH);dprintf(fd,s,10,10,10,10,10,48+i-1,10,34,34,10,34,34,10,34,34,34,34,10,34,34,10,34,34,10,34,s,34,10,10);e();close(fd);}
-int main(){if(i)f();}
+int i=5;
+char *s="#include <unistd.h>%c#include <stdio.h>%c#include <fcntl.h>%c#include <stdlib.h>%cint i=%d;%cchar *s=%c%s%c;%cint main(){if(!i)return 0;%cchar name[99]=%cSully_%%d.c%c;sprintf(name,name,i);int fd=open(name,O_CREAT|O_RDWR|O_TRUNC,0654);dprintf(fd,s,10,10,10,10,i,10,34,s,34,10,10,34,34,34,34,10,34,34,34,34,10);char cmd[99]=%cgcc -o Sully_%%d Sully_%%d.c%c;sprintf(cmd,cmd,i,i);close(fd);system(cmd);%cchar name1[99]=%cSully_%%d.c%c;sprintf(name1,name1,--i);fd=open(name1,O_CREAT|O_RDWR|O_TRUNC,0654);dprintf(fd,s,10,10,10,10,i,10,34,s,34,10,10,34,34,34,34,10,34,34,34,34,10);char cmd1[99]=%cgcc -o Sully_%%d Sully_%%d.c && ./Sully_%%d%c;sprintf(cmd1,cmd1,i,i,i);close(fd);system(cmd1);}%c";
+int main(){if(!i)return 0;
+char name[99]="Sully_%d.c";sprintf(name,name,i);int fd=open(name,O_CREAT|O_RDWR|O_TRUNC,0654);dprintf(fd,s,10,10,10,10,i,10,34,s,34,10,10,34,34,34,34,10,34,34,34,34,10);char cmd[99]="gcc -o Sully_%d Sully_%d.c";sprintf(cmd,cmd,i,i);close(fd);system(cmd);
+char name1[99]="Sully_%d.c";sprintf(name1,name1,--i);fd=open(name1,O_CREAT|O_RDWR|O_TRUNC,0654);dprintf(fd,s,10,10,10,10,i,10,34,s,34,10,10,34,34,34,34,10,34,34,34,34,10);char cmd1[99]="gcc -o Sully_%d Sully_%d.c && ./Sully_%d";sprintf(cmd1,cmd1,i,i,i);close(fd);system(cmd1);}
