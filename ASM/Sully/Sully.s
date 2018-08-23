@@ -4,9 +4,7 @@ extern _dprintf
 extern _printf
 extern _system
 extern _puts
-
 section .text
-
 _build:
 push rdi
 mov rdx,rdi
@@ -71,26 +69,26 @@ lea rdi,[rel buf]
 call _system
 pop rdi
 ret
-
 _main:
 cmp DWORD [rel i],0
 je end
-
 mov rdi,[rel i]
 push rdi
 call _build
 dec rdi
 call _build
+mov rdx,rdi
+lea rdi,[rel buf]
+lea rsi,[rel run]
+call _sprintf
+lea rdi,[rel buf]
+call _system
 pop rdi
-; code run below
-
-
 end:
 mov rax,0x02000001
 mov rdi,0
 syscall
 ret
-
 section .bss
 buf: resb 1024
 section .data
