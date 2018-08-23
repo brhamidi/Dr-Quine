@@ -42,13 +42,13 @@ push 39
 push 10
 push 39
 push 39
-mov r15,1
+mov r15,91
 pus: push 10
 dec r15
 cmp r15,0
 jne pus
 call _dprintf
-mov r15,16
+mov r15,106
 po: pop rax
 dec r15
 cmp r15,0
@@ -69,6 +69,7 @@ lea rdi,[rel buf]
 call _system
 pop rdi
 ret
+
 _main:
 cmp DWORD [rel i],0
 je end
@@ -95,5 +96,5 @@ section .data
 compile: db 'nasm -fmacho64 Sully_%d.s && gcc Sully_%d.o -o Sully_%d && rm -f Sully_%d.o',0
 filename: db 'Sully_%d.s',0
 run: db './Sully_%d',0
-data: db 'global _main%cextern _sprintf%cextern _dprintf%cextern _printf%csection .data%ccompile: db %cnasm -fmacho64 Sully_%%d.s && gcc Sully_%%d.o -o Sully_%%d && rm -f Sully_%%d.o%c,0%cfilename: db %cSully_%%d.s%c,0%crun: db %c./Sully_%%d%c,0%cdata: db %c%s%c,0%ci: dd %d%c',0
+data: db 'global _main%cextern _sprintf%cextern _dprintf%cextern _printf%cextern _system%cextern _puts%csection .text%c_build:%cpush rdi%cmov rdx,rdi%clea rdi,[rel buf]%clea rsi,[rel filename]%ccall _sprintf%cmov rax,0x02000000 | 5%clea rdi,[rel buf]%cmov rsi,0x0002 | 0x0200 | 0x0400%cmov rdx,654q%csyscall%cpop r13%cpush r13%cpush rbp%cpush rax%cmov rdi,rax%clea rsi,[rel data]%cmov rdx,10%cmov rcx,10%cmov r8,10%cmov r9,10%cpush 10%cpush r13%cpush 10%cpush 39%clea r13,[rel data]%cpush r13%cpush 39%cpush 10%cpush 39%cpush 39%cpush 10%cpush 39%cpush 39%cpush 10%cpush 39%cpush 39%cmov r15,91%cpus: push 10%cdec r15%ccmp r15,0%cjne pus%ccall _dprintf%cmov r15,106%cpo: pop rax%cdec r15%ccmp r15,0%cjne po%cpop rdi%cpop rbp%cmov rax,0x02000000 | 6%csyscall%clea rdi,[rel buf]%clea rsi,[rel compile]%cpop rdx%cmov rcx,rdx%cmov r8,rdx%cmov r9,rdx%cpush rdx%ccall _sprintf%clea rdi,[rel buf]%ccall _system%cpop rdi%cret%c%c_main:%ccmp DWORD [rel i],0%cje end%cmov rdi,[rel i]%cpush rdi%ccall _build%cdec rdi%ccall _build%cmov rdx,rdi%clea rdi,[rel buf]%clea rsi,[rel run]%ccall _sprintf%clea rdi,[rel buf]%ccall _system%cpop rdi%cend:%cmov rax,0x02000001%cmov rdi,0%csyscall%cret%csection .bss%cbuf: resb 1024%csection .data%ccompile: db %cnasm -fmacho64 Sully_%%d.s && gcc Sully_%%d.o -o Sully_%%d && rm -f Sully_%%d.o%c,0%cfilename: db %cSully_%%d.s%c,0%crun: db %c./Sully_%%d%c,0%cdata: db %c%s%c,0%ci: dd %d%c',0
 i: dd 5
